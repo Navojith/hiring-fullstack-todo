@@ -1,0 +1,24 @@
+version: '3.9'
+
+services:
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: todo-server
+    ports:
+      - '5000:5000'
+    environment:
+      NODE_ENV: production
+    restart: unless-stopped
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: todo-client
+    ports:
+      - '3000:80'
+    depends_on:
+      - server
+    restart: unless-stopped
