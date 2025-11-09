@@ -1,0 +1,11 @@
+{
+  "ROOT": {
+    "route": "/"
+  },
+  "ABOUT": {
+    "route": "about"
+  },
+  "TODO": {
+    "route": "todo"
+  }
+}
