@@ -1,0 +1,88 @@
+name: Conditional Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      client_changed: ${{ steps.set-outputs.outputs.client_changed }}
+      server_changed: ${{ steps.set-outputs.outputs.server_changed }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Determine changed folders
+        id: set-outputs
+        run: |
+          CLIENT=false
+          SERVER=false
+          git fetch --depth=2 origin main
+          CHANGED_FILES=$(git diff --name-only origin/main HEAD)
+
+          if echo "$CHANGED_FILES" | grep -q "^client/"; then
+            CLIENT=true
+          fi
+
+          if echo "$CHANGED_FILES" | grep -q "^server/"; then
+            SERVER=true
+          fi
+
+          echo "client_changed=$CLIENT" >> $GITHUB_OUTPUT
+          echo "server_changed=$SERVER" >> $GITHUB_OUTPUT
+
+  build-client:
+    runs-on: ubuntu-latest
+    needs: check-changes
+    if: needs.check-changes.outputs.client_changed == 'true'
+    defaults:
+      run:
+        working-directory: ./client
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+
+  build-server:
+    runs-on: ubuntu-latest
+    needs: check-changes
+    if: needs.check-changes.outputs.server_changed == 'true'
+    defaults:
+      run:
+        working-directory: ./server
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Compile TS
+        run: npx tsc
+
+      - name: Lint
+        run: npx eslint .
