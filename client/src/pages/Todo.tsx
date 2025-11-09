@@ -24,6 +24,7 @@ import {
 } from '@/components/ui/dialog';
 import type { DialogType, TodoFormValues } from '@/types/common';
 import { FileText } from 'lucide-react';
+import { toast } from 'sonner';
 
 const Todo = () => {
   const { todoList, isLoading } = useGetTodos(true);
@@ -63,22 +64,37 @@ const Todo = () => {
   };
 
   const handleAdd = (data: CreateTodoDto) => {
-    addTodo.mutate(data);
+    addTodo.mutate(data, {
+      onSuccess: () => toast('Successfully Added'),
+      onError: (error) => toast('Error occurred ' + error.message),
+    });
     closeDialog();
   };
 
   const handleUpdate = (data: UpdateTodoDto) => {
     if (!editingTodo) return;
-    updateTodo.mutate({ id: editingTodo.id, data });
+    updateTodo.mutate(
+      { id: editingTodo.id, data },
+      {
+        onSuccess: () => toast('Successfully Updated'),
+        onError: (error) => toast('Error occurred ' + error.message),
+      }
+    );
     closeDialog();
   };
 
   const handleToggle = (todo: TodoResponseDto) => {
-    toggleTodo.mutate(todo.id);
+    toggleTodo.mutate(todo.id, {
+      onSuccess: () => toast('Successfully Updated'),
+      onError: (error) => toast('Error occurred ' + error.message),
+    });
   };
 
   const handleDelete = (id: string) => {
-    deleteTodo.mutate(id);
+    deleteTodo.mutate(id, {
+      onSuccess: () => toast('Successfully Deleted'),
+      onError: (error) => toast('Error occurred ' + error.message),
+    });
   };
 
   if (isLoading) return <p className="p-4">Loading todos...</p>;

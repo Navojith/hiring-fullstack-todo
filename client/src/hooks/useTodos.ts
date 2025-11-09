@@ -28,52 +28,60 @@ export const useGetTodos = (enabled?: boolean) => {
 // --------- Add Todo ---------
 export const useAddTodo = () => {
   const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: async (data: CreateTodoDto) => {
-      return createTodo(data);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['todoList'] });
-    },
-  });
+  const { mutate, mutateAsync, status, error, data, isPending, reset } =
+    useMutation({
+      mutationFn: async (data: CreateTodoDto) => {
+        return createTodo(data);
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['todoList'] });
+      },
+    });
+  return { mutate, mutateAsync, status, error, data, isPending, reset };
 };
 
 // --------- Update Todo ---------
 export const useUpdateTodo = () => {
   const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: async ({ id, data }: { id: string; data: UpdateTodoDto }) => {
-      return updateTodo(id, data);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['todoList'] });
-    },
-  });
+  const { mutate, mutateAsync, status, error, data, isPending, reset } =
+    useMutation({
+      mutationFn: async ({ id, data }: { id: string; data: UpdateTodoDto }) => {
+        return updateTodo(id, data);
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['todoList'] });
+      },
+    });
+  return { mutate, mutateAsync, status, error, data, isPending, reset };
 };
 
 // --------- Toggle Done ---------
 export const useToggleTodo = () => {
   const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: async (id: string) => {
-      const res = await toggleDoneTodo(id);
-      return res?.data;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['todoList'] });
-    },
-  });
+  const { mutate, mutateAsync, status, error, data, isPending, reset } =
+    useMutation({
+      mutationFn: async (id: string) => {
+        const res = await toggleDoneTodo(id);
+        return res?.data;
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['todoList'] });
+      },
+    });
+  return { mutate, mutateAsync, status, error, data, isPending, reset };
 };
 
 // --------- Delete Todo ---------
 export const useDeleteTodo = () => {
   const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: async (id: string) => {
-      return deleteTodo(id);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['todoList'] });
-    },
-  });
+  const { mutate, mutateAsync, status, error, data, isPending, reset } =
+    useMutation({
+      mutationFn: async (id: string) => {
+        return deleteTodo(id);
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['todoList'] });
+      },
+    });
+  return { mutate, mutateAsync, status, error, data, isPending, reset };
 };
