@@ -30,3 +30,15 @@
 2025-11-09T08:56:02.703Z [info]: Connected to MongoDB
 2025-11-09T08:56:02.710Z [info]: Server running at http://localhost:4000/api
 2025-11-09T08:56:02.710Z [info]: Swagger docs at http://localhost:4000/api/docs
+2025-11-09T13:24:27.199Z [info]: Connected to MongoDB
+2025-11-09T13:24:27.206Z [info]: Server running at http://localhost:4000/api
+2025-11-09T13:24:27.207Z [info]: Swagger docs at http://localhost:4000/api/docs
+2025-11-09T13:31:19.269Z [info]: Connected to MongoDB
+2025-11-09T13:31:19.272Z [info]: Server running at http://localhost:5000/api
+2025-11-09T13:31:19.272Z [info]: Swagger docs at http://localhost:5000/api/docs
+2025-11-09T13:31:52.335Z [info]: Connected to MongoDB
+2025-11-09T13:31:52.341Z [info]: Server running at http://localhost:5000/api
+2025-11-09T13:31:52.342Z [info]: Swagger docs at http://localhost:5000/api/docs
+2025-11-09T13:33:17.803Z [info]: Connected to MongoDB
+2025-11-09T13:33:17.808Z [info]: Server running at http://localhost:5000/api
+2025-11-09T13:33:17.809Z [info]: Swagger docs at http://localhost:5000/api/docs
