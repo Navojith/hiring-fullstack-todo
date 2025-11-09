@@ -1,0 +1,16 @@
+{
+  "app": {
+    "port": 4000,
+    "basePath": "/api",
+    "swaggerPath": "/docs"
+  },
+  "mongo": {
+    "uri": "uri"
+  },
+  "security": {
+    "rateLimit": {
+      "windowMs": 60000,
+      "max": 100
+    }
+  }
+}
